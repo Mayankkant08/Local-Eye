@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - LocalEyes</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Profile-specific styles */
+        .profile-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--gold);
+        }
+
+        .profile-info h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-info p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--gold);
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .profile-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--light-bg);
+        }
+
+        .tab {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            border-bottom: 2px solid var(--gold);
+            color: var(--gold);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .booking-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .booking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .booking-status {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .status-upcoming {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .status-completed {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-cancelled {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .settings-form {
+            max-width: 600px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--black);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .save-btn {
+            background: var(--gold);
+            color: var(--dark-bg);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <h1 class="logo">LocalEyes</h1>
+            <div class="nav-links">
+                <a href="/index.html">Home</a>
+                <a href="/Find Guide/find.html">Find Guides</a>
+                <a href="/Pricing/pricing.html">Pricing</a>
+                <a href="/Contact/contact.html">Contact</a>
+                <a href="/About/about.html">About</a>
+                <div id="authButtons">
+                    <!-- These will be dynamically updated -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="profile-container">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="profile-info">
+                <h1 id="userName">Loading...</h1>
+                <p id="userEmail">Loading...</p>
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalBookings">0</div>
+                        <div class="stat-label">Total Bookings</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="upcomingBookings">0</div>
+                        <div class="stat-label">Upcoming</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="completedBookings">0</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-tabs">
+            <div class="tab active" data-tab="bookings">My Bookings</div>
+            <div class="tab" data-tab="settings">Settings</div>
+        </div>
+
+        <div class="tab-content active" id="bookings">
+            <div id="bookingsList">
+                <!-- Bookings will be loaded here -->
+            </div>
+        </div>
+
+        <div class="tab-content" id="settings">
+            <form class="settings-form">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                <button type="submit" class="save-btn">Save Changes</button>
+            </form>
+        </div>
+    </main>
+
+    <script src="/js/auth.js"></script>
+    <script>
+        // Tab switching functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Load user profile data
+        function loadProfileData() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
+                document.getElementById('userEmail').textContent = user.email;
+                document.getElementById('name').value = user.name;
+                document.getElementById('email').value = user.email;
+                document.getElementById('phone').value = user.phone || '';
+            }
+        }
+
+        // Load bookings data
+        function loadBookings() {
+            const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+            const bookingsList = document.getElementById('bookingsList');
+
+            // Update stats
+            document.getElementById('totalBookings').textContent = bookings.length;
+            document.getElementById('upcomingBookings').textContent =
+                bookings.filter(b => b.status === 'upcoming').length;
+            document.getElementById('completedBookings').textContent =
+                bookings.filter(b => b.status === 'completed').length;
+
+            // Display bookings
+            bookingsList.innerHTML = bookings.map(booking => `
+                <div class="booking-card">
+                    <div class="booking-header">
+                        <h3>${booking.guideName}</h3>
+                        <span class="booking-status status-${booking.status}">
+                            ${booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
+                        </span>
+                    </div>
+                    <p>Date: ${booking.date}</p>
+                    <p>Location: ${booking.location}</p>
+                    <p>Duration: ${booking.duration} hours</p>
+                </div>
+            `).join('');
+        }
+
+        // Initialize profile page
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProfileData();
+            loadBookings();
+        });
+    </script>
+</body>
+
+</html>

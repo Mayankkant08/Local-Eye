@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Local Guides - LocalEyes</title>
+    <link rel="stylesheet" href="find.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --gold: #ffd700;
+            --black: #2d3436;
+            --dark-bg: #000;
+            --light-bg: #f8f9fa;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--black);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--dark-bg);
+            padding: 1rem 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            color: var(--gold);
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a.active {
+            color: var(--gold);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Search Section */
+        .search-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .search-btn {
+            padding: 12px 30px;
+            background: var(--dark-bg);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: var(--gold);
+            color: var(--dark-bg);
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 2px solid #eee;
+            border-radius: 20px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: var(--dark-bg);
+            color: white;
+            border-color: var(--dark-bg);
+        }
+
+        .filter-btn:hover {
+            background: var(--gold);
+            color: var(--dark-bg);
+            border-color: var(--gold);
+        }
+
+        /* Guides Grid */
+        .guides-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .guide-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .guide-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .guide-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .guide-info {
+            padding: 20px;
+        }
+
+        .guide-name {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: var(--black);
+        }
+
+        .guide-location {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .guide-expertise {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .expertise-tag {
+            background: #f0f7ff;
+            color: var(--dark-bg);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+
+        .guide-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .book-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--dark-bg);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .book-btn:hover {
+            background: var(--gold);
+            color: var(--dark-bg);
+        }
+
+        .no-guides {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-bg);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .tagline {
+            color: var(--gold);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        footer a {
+            color: var(--gold);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        footer a:hover {
+            opacity: 0.8;
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, var(--gold) 50%, transparent 100%);
+            margin: 2rem auto;
+            width: 80%;
+        }
+
+        .user-menu {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-greeting {
+            color: var(--gold);
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .user-greeting:hover {
+            background-color: rgba(255, 215, 0, 0.1);
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            z-index: 1;
+        }
+
+        .user-menu:hover .user-dropdown {
+            display: block;
+        }
+
+        .user-dropdown a {
+            color: var(--black);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        .user-dropdown a:hover {
+            background-color: #f8f9fa;
+            color: var(--gold);
+        }
+
+        .nav-cta {
+            background-color: var(--gold);
+            color: var(--dark-bg);
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .nav-cta:hover {
+            background-color: #ffd700;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <h1 class="logo">LocalEyes</h1>
+            <div class="nav-links">
+                <a href="/index.html">Home</a>
+                <a href="/Find Guide/find.html" class="active">Find Guides</a>
+                <a href="/Pricing/pricing.html">Pricing</a>
+                <a href="/Contact/contact.html">Contact</a>
+                <a href="/About/about.html">About</a>
+                <div id="authButtons">
+                    <!-- These will be dynamically updated -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Section -->
+    <section class="search-container">
+        <h2>Find Your Perfect Local Guide</h2>
+        <div class="search-box">
+            <input type="text" class="search-input" placeholder="Search by city (e.g. Delhi, Mumbai, Jaipur)...">
+            <button class="search-btn">Search</button>
+        </div>
+        <p class="search-hint">Showing top-rated guides in India</p>
+    </section>
+
+    <!-- Guides Grid -->
+    <section class="guides-grid" id="guidesGrid">
+        <!-- Guide cards will be dynamically inserted here -->
+        <div class="no-guides">
+            <i class="fas fa-compass" style="font-size: 48px; margin-bottom: 20px;"></i>
+            <h3>Loading top-rated guides...</h3>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p class="tagline">Discover • Connect • Explore</p>
+            <a href="/privacy/privacy.html">Privacy Policy</a>
+        </div>
+    </footer>
+
+    <script src="/js/auth.js"></script>
+    <script>
+        // Function to create a guide card
+        function createGuideCard(guide) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            const isLoggedIn = !!user;
+
+            return `
+                <div class="guide-card">
+                    <img src="${guide.image}" alt="${guide.name}" class="guide-image">
+                    <div class="guide-info">
+                        <h3 class="guide-name">${guide.name}</h3>
+                        <p class="guide-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            ${guide.location}
+                        </p>
+                        <div class="guide-expertise">
+                            <span class="expertise-tag">${guide.expertise}</span>
+                        </div>
+                        <div class="guide-rating">
+                            <i class="fas fa-star"></i>
+                            <span>${guide.rating} (${guide.reviews} reviews)</span>
+                        </div>
+                        ${isLoggedIn
+                    ? `<button class="book-btn" onclick="bookGuide(${guide.id})">
+                                Book Now
+                               </button>`
+                    : `<button class="book-btn" onclick="requireLogin()">
+                                Sign In to Book
+                               </button>`
+                }
+                    </div>
+                </div>
+            `;
+        }
+
+        // Function to handle login requirement
+        function requireLogin() {
+            alert('Please sign in to book a guide');
+            window.location.href = '/Singnin/sign.html';
+        }
+
+        // Function to handle guide booking
+        function bookGuide(guideId) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                requireLogin();
+                return;
+            }
+
+            // TODO: Implement booking functionality
+            alert('Booking functionality coming soon!');
+        }
+
+        // Sample guide data
+        const sampleGuides = [
+            {
+                id: 1,
+                name: "Rajesh Kumar",
+                location: "Delhi",
+                expertise: "Heritage & History",
+                rating: 4.9,
+                reviews: 128,
+                image: "https://source.unsplash.com/random/300x200/?indian,man"
+            },
+            {
+                id: 2,
+                name: "Priya Sharma",
+                location: "Mumbai",
+                expertise: "Street Food & Culture",
+                rating: 4.8,
+                reviews: 234,
+                image: "https://source.unsplash.com/random/300x200/?indian,woman"
+            },
+            {
+                id: 3,
+                name: "Amit Patel",
+                location: "Jaipur",
+                expertise: "Architecture & History",
+                rating: 4.9,
+                reviews: 156,
+                image: "https://source.unsplash.com/random/300x200/?indian,man"
+            },
+            {
+                id: 4,
+                name: "Neha Gupta",
+                location: "Varanasi",
+                expertise: "Spiritual & Cultural",
+                rating: 4.7,
+                reviews: 98,
+                image: "https://source.unsplash.com/random/300x200/?indian,woman"
+            },
+            {
+                id: 5,
+                name: "Arjun Singh",
+                location: "Goa",
+                expertise: "Beaches & Adventure",
+                rating: 4.8,
+                reviews: 187,
+                image: "https://source.unsplash.com/random/300x200/?indian,man"
+            },
+            {
+                id: 6,
+                name: "Meera Desai",
+                location: "Kolkata",
+                expertise: "Art & Literature",
+                rating: 4.9,
+                reviews: 145,
+                image: "https://source.unsplash.com/random/300x200/?indian,woman"
+            }
+        ];
+
+        // Function to load guides
+        async function loadGuides(location = null) {
+            try {
+                let guides = [...sampleGuides]; // Create a copy of the sample guides
+
+                if (location) {
+                    // Filter guides by location
+                    guides = guides.filter(guide =>
+                        guide.location.toLowerCase().includes(location.toLowerCase()) ||
+                        guide.name.toLowerCase().includes(location.toLowerCase()) ||
+                        guide.expertise.toLowerCase().includes(location.toLowerCase())
+                    );
+
+                    // Sort by relevance (location matches first, then name, then expertise)
+                    guides.sort((a, b) => {
+                        const aLocationMatch = a.location.toLowerCase().includes(location.toLowerCase());
+                        const bLocationMatch = b.location.toLowerCase().includes(location.toLowerCase());
+                        if (aLocationMatch && !bLocationMatch) return -1;
+                        if (!aLocationMatch && bLocationMatch) return 1;
+
+                        const aNameMatch = a.name.toLowerCase().includes(location.toLowerCase());
+                        const bNameMatch = b.name.toLowerCase().includes(location.toLowerCase());
+                        if (aNameMatch && !bNameMatch) return -1;
+                        if (!aNameMatch && bNameMatch) return 1;
+
+                        // If same relevance, sort by rating
+                        return b.rating - a.rating;
+                    });
+                } else {
+                    // Sort by rating when no search term
+                    guides.sort((a, b) => b.rating - a.rating);
+                }
+
+                const guidesGrid = document.getElementById('guidesGrid');
+                const searchHint = document.querySelector('.search-hint');
+
+                if (guides.length > 0) {
+                    guidesGrid.innerHTML = guides.map(createGuideCard).join('');
+                    searchHint.textContent = location
+                        ? `Found ${guides.length} guides matching "${location}"`
+                        : 'Showing top-rated guides in India';
+                } else {
+                    guidesGrid.innerHTML = `
+                        <div class="no-guides">
+                            <i class="fas fa-compass" style="font-size: 48px; margin-bottom: 20px;"></i>
+                            <h3>No guides found matching "${location}"</h3>
+                            <p>Try searching for a different location, name, or expertise</p>
+                        </div>
+                    `;
+                    searchHint.textContent = `No guides found matching "${location}"`;
+                }
+            } catch (error) {
+                console.error('Error loading guides:', error);
+                document.getElementById('guidesGrid').innerHTML = `
+                    <div class="no-guides">
+                        <i class="fas fa-exclamation-circle" style="font-size: 48px; margin-bottom: 20px;"></i>
+                        <h3>Error loading guides</h3>
+                        <p>Please try again later</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Debounce function to limit how often a function can be called
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Load guides when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            loadGuides();
+        });
+
+        // Handle real-time search
+        const searchInput = document.querySelector('.search-input');
+        const debouncedSearch = debounce((value) => {
+            loadGuides(value);
+        }, 300); // 300ms delay
+
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.trim();
+            debouncedSearch(searchTerm);
+        });
+
+        // Handle search button click
+        document.querySelector('.search-btn').addEventListener('click', () => {
+            const searchTerm = searchInput.value.trim();
+            loadGuides(searchTerm);
+        });
+
+        // Handle Enter key in search
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const searchTerm = e.target.value.trim();
+                loadGuides(searchTerm);
+            }
+        });
+    </script>
+</body>
+
+</html>

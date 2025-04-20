@@ -1,0 +1,88 @@
+/* privacy.css */
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: #f7f9fc;
+    color: #333;
+}
+
+nav {
+    background-color: #1e1e2f;
+    color: #fff;
+    padding: 15px 20px;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    margin: 0;
+    font-size: 24px;
+}
+
+.nav-links a {
+    color: #fff;
+    margin-left: 15px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+.privacy-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.privacy-section h2 {
+    color: #1e1e2f;
+    margin-bottom: 10px;
+}
+
+.privacy-section h3 {
+    margin-top: 30px;
+    color: #2c3e50;
+}
+
+.privacy-section ul {
+    padding-left: 20px;
+}
+
+.privacy-section a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.privacy-section a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    text-align: center;
+    background-color: #1e1e2f;
+    color: white;
+    padding: 15px 20px;
+    margin-top: 60px;
+}
+
+footer a {
+    color: #fff;
+    margin-left: 10px;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,47 @@
+[
+    {
+        "id": 1,
+        "name": "Test User",
+        "email": "test@example.com",
+        "password": "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
+        "bookings": [],
+        "reviews": [],
+        "created_at": "2025-04-10T04:22:36.667877"
+    },
+    {
+        "id": 2,
+        "name": "Test User",
+        "email": "test@123.com",
+        "password": "515d5dacd66d78baf88cb3184fe17c848c4793fd4274417d3da7c6e052ac57ed",
+        "bookings": [],
+        "reviews": [],
+        "created_at": "2025-04-10T04:35:45.145695"
+    },
+    {
+        "id": 3,
+        "name": "aj afch",
+        "email": "trap@example.com",
+        "password": "f26030ae0b3e27fd186b8eef7dc4737c2d37048f036927e0015a7cf626e085ae",
+        "bookings": [],
+        "reviews": [],
+        "created_at": "2025-04-10T05:23:08.798525"
+    },
+    {
+        "id": 4,
+        "name": "Arsh Singh",
+        "email": "bruh123@gmail.com",
+        "password": "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
+        "bookings": [],
+        "reviews": [],
+        "created_at": "2025-04-20T17:45:26.582978"
+    },
+    {
+        "id": 5,
+        "name": "ayush singh",
+        "email": "ayushsingh@gmail.com",
+        "password": "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
+        "bookings": [],
+        "reviews": [],
+        "created_at": "2025-04-20T18:03:42.068919"
+    }
+]

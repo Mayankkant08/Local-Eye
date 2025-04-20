@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "name": "Arsh singh",
+        "email": "test1234@exmample.com",
+        "password": "f26030ae0b3e27fd186b8eef7dc4737c2d37048f036927e0015a7cf626e085ae",
+        "location": "",
+        "expertise": "",
+        "rating": 0,
+        "reviews": [],
+        "is_verified": false,
+        "created_at": "2025-04-10T04:36:51.927378"
+    },
+    {
+        "id": 2,
+        "name": "Arsh singh",
+        "email": "test123@exmample.com",
+        "password": "f26030ae0b3e27fd186b8eef7dc4737c2d37048f036927e0015a7cf626e085ae",
+        "location": "",
+        "expertise": "",
+        "rating": 0,
+        "reviews": [],
+        "is_verified": false,
+        "created_at": "2025-04-10T06:18:08.155098"
+    }
+]
